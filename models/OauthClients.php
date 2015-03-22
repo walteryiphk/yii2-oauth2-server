@@ -34,10 +34,10 @@ class OauthClients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'client_secret', 'redirect_uri', 'grant_types'], 'required'],
+            [['client_id', 'redirect_uri'], 'required'],
             [['user_id'], 'integer'],
-            [['client_id', 'client_secret'], 'string', 'max' => 32],
-            [['redirect_uri'], 'string', 'max' => 1000],
+            [['client_id', 'client_secret'], 'string', 'max' => 80],
+            [['redirect_uri'], 'string', 'max' => 2000],
             [['grant_types'], 'string', 'max' => 100],
             [['scope'], 'string', 'max' => 2000]
         ];

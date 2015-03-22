@@ -35,7 +35,7 @@ class OauthAccessTokens extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['expires'], 'safe'],
             [['access_token'], 'string', 'max' => 40],
-            [['client_id'], 'string', 'max' => 32],
+            [['client_id'], 'string', 'max' => 80],
             [['scope'], 'string', 'max' => 2000]
         ];
     }

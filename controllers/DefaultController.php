@@ -19,13 +19,42 @@ class DefaultController extends \yii\rest\Controller
             ],
         ]);
     }
-    
+
     public function actionToken()
     {
         $server = $this->module->getServer();
         $request = $this->module->getRequest();
         $response = $server->handleTokenRequest($request);
-        
+
+        return $response->getParameters();
+    }
+
+    /**
+     * Default authorize endpoint
+     */
+    public function actionAuthorize()
+    {
+        $server = $this->module->getServer();
+        $request = $this->module->getRequest();
+        $response = $this->module->getResponse();
+        if(!$server->validateAuthorizeRequest($request,$response))
+        {
+            return $response->getParameters();
+        }
+        if(empty($_POST))
+        {
+            exit('<form method="post"><label>Do You Authorize?</label><br/>
+                 <input type="submit" name="authorized" value="yes"><input type="submit" name="authorized" value="no"></form>');
+        }
+        $is_authorized = ($_POST['authorized'] === 'yes');
+        if(!\Yii::$app->user->isGuest)
+        {
+            $server->handleAuthorizeRequest($request,$response,$is_authorized,\Yii::$app->user->getId());
+        }
+        else
+        {
+            $server->handleAuthorizeRequest($request,$response,$is_authorized);
+        }
         return $response->getParameters();
     }
 }

@@ -32,12 +32,12 @@ class OauthAuthorizationCodes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['authorization_code', 'client_id', 'redirect_uri', 'expires'], 'required'],
+            [['authorization_code', 'client_id', 'expires'], 'required'],
             [['user_id'], 'integer'],
             [['expires'], 'safe'],
             [['authorization_code'], 'string', 'max' => 40],
-            [['client_id'], 'string', 'max' => 32],
-            [['redirect_uri'], 'string', 'max' => 1000],
+            [['client_id'], 'string', 'max' => 80],
+            [['redirect_uri'], 'string', 'max' => 2000],
             [['scope'], 'string', 'max' => 2000]
         ];
     }
